@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { memo } from "react";
 
-function App() {
+import routes from "./router";
+import { renderRoutes } from "react-router-config";
+import { HashRouter } from "react-router-dom";
+
+import MusicFooter from "./components/MusicFooter";
+import MusicHeader from "./components/MusicHeader";
+
+import { Provider } from "react-redux";
+import store from "./store";
+
+const App = memo(() => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <HashRouter>
+        <MusicHeader></MusicHeader>
+        {renderRoutes(routes)}
+        <MusicFooter></MusicFooter>
+      </HashRouter>
+    </Provider>
   );
-}
+});
 
 export default App;
