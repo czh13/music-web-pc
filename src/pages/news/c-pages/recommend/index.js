@@ -1,27 +1,42 @@
 import React, { memo, useEffect } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { getTopBannerAction } from "./store/createAction";
+import HotRecommend from "./c-cpns/hot-recommend";
 
-function Recommend(props)  {
-  // useDispatch可以直接获取dispatch，不需要在通过connect
-  const dispatch = useDispatch()
-  // useSelector获取redux中的数据
-  // 接受两个参数，第一个是回调函数,shallowEqual浅层比较
-  const recommend = useSelector(state=>({
-    topBanners:state.recommend.topBanners
-  }),shallowEqual)
+import {
+  RecommendWrapped,
+  Content,
+  RecommendLeft,
+  RecommendRight,
+} from "./style";
+import TopBanners from "./c-cpns/topBanners";
 
-  useEffect(()=>{
-    dispatch(getTopBannerAction())
-  },[dispatch])
+function Recommend(props) {
+  // 以下代码被移到topBanner组件中
+  // // useDispatch可以直接获取dispatch，不需要在通过connect
+  // const dispatch = useDispatch()
+
+  // // useSelector获取redux中的数据
+  // // 接受两个参数，第一个是回调函数,shallowEqual浅层比较
+  // const recommend = useSelector(state=>({
+  //   // topBanners:state.recommend.topBanners
+
+  //   // topBanners:state.get('recommend').get('topBanners')
+  //   topBanners:state.getIn(['recommend','topBanners']) //同上等价
+  // }),shallowEqual)
+
+  // useEffect(()=>{
+  //   dispatch(getTopBannerAction())
+  // },[dispatch])
 
   return (
-    <div>
-      <h2>Recommend:{recommend.topBanners.length} </h2>
-    </div>
+    <RecommendWrapped>
+      <TopBanners></TopBanners>
+      <Content className="wrap-v2">
+        <RecommendLeft><HotRecommend></HotRecommend></RecommendLeft>
+        <RecommendRight></RecommendRight>
+      </Content>
+    </RecommendWrapped>
   );
 }
-
 
 export default memo(Recommend);
 
